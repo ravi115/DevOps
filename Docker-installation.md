@@ -5,7 +5,7 @@
 
           sudo apt-get remove docker docker-engine docker.io
           
-  2. it's always preffred to install the docker using repository.
+  2. it's always preffered to install the docker using repository.
       - first update the packages.
           
             sudo apt-get update
