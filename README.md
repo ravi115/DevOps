@@ -1,2 +1,2 @@
-# docker-tutorials
-This Repository contains all the sample to demonstrate each features of docker. 
+# DevOps Skills
+This Repository contains all the samples to demonstrate each features of modern DevOps Skills like: docker, Kubenetes, Jenkins and many more. 
