@@ -37,3 +37,7 @@
 8. To stop a container.
 
           docker stop <container_id>
+          
+9. To delete a contianer.
+
+         docker rm <container_id>/<container_name>
