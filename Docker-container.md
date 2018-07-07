@@ -37,14 +37,15 @@
 8. To stop a container.
 
           docker stop <container_id>
-          - to go inside the container after restarting the container using above command, we have to execute one more command.
-          docker attach <container_name>
-          - after this, it will take us inside the container.
-          
+         
 9. To delete a contianer.
 
          docker rm <container_id>/<container_name>
          
-10. Too restart a container.
+10. To restart a container.
   
          docker restart <container_name>
+         - to go inside the container after restarting the container using above command, we have to execute one more command.
+         docker attach <container_name>
+         - after this, it will take us inside the container.
+          
