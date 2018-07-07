@@ -41,3 +41,7 @@
 9. To delete a contianer.
 
          docker rm <container_id>/<container_name>
+         
+10. Too restart a container.
+  
+         docker restart <container_name>
