@@ -31,5 +31,5 @@
         
 8. If we want to publish the port of an image to external world, then we use -p parameter.
 
-        docker run -d --name <customer_iamge/container_name> -p <image>
+        docker run -d --name <customer_iamge/container_name> -p 80:<port_number> <image>
         -The above container will be published to a  random port. since we havw used the -p paramter.
