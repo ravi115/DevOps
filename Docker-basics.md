@@ -53,5 +53,12 @@
           -if we don;t specify the tag, it will download the default tag images i.e. latest.
           -the above command gets resolved into docker run -it <image_name>:latest
           
+   
+  10. we can also specify the command how we want to launch the container.
+  
+          docker run -it --name <container name> <image_name> <COMMAND>
+          
+          e.g.: docker run -it --name redis1 redis sh
+          - after running above command a redis1 named container will be launched for redis image and open in a shell mode.
           
             
