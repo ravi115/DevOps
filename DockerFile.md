@@ -10,11 +10,55 @@
   - DockerFile is always aligned on any base images.
   - Docker daemon build docker images automatically by reading the instructions from the DockerFile.
   
+**DockerFile Build Process** :
+  - To build a docker file we use below command.
+        
+            docker build <some_arguments> <.>
+  - The above command will be ran by docker deamon,not by the CLI.
+  - The build process first sends the entire context to the docker deamon, context means the available files inside the directory. that's why it is advisable to place a dockerfile which requires to be build shuold be placed in a sperate directory.
+  - **Dockerfile** is standard naming convention to create a docker file.
+  - when we build the dockerfile then we need to run the docker build command inside the directory where the dockerfile is present else we need to use **-f** to specify the dockerfile location explicitly.
+    
+        docker build DockerFile .
+  - so the docker daemon will look for the DockerFile in the current directory and build the docker images in the current directory.
+    
+        docker build -f /path/to/a/dockerfile .
+  - so in the above case, the deamon will search for the docker file in the specified path and build the docker image in the current directory.
+  - if we want to tag the docker images the use **-t** flag while building.
+  
+          docker build -t <repository_name>/<image_name>:<tag_name> .
+  - if we want to build the same images in multiple tags then we ccan specify the muiltple **-t** flag and build the images.
+      
+          docker build -t <repository_name>/<image_name>:<tag_name> -t <repository_name><image_name>:<tag_name> .
+         
+          e.g.: 
+          docker build -t ravi115ranjan/myubuntu:0.1.ravi -t ravi115ranjan/myubuntu:latest .
+  - Dockerfile syntax will be validated by docker deamon before it starts building the docker images.
+  - The Docker daemon runs the instructions in the Dockerfile one-by-one, committing the result of each instruction to a new image if necessary, before finally outputting the ID of your new image. The Docker daemon will automatically clean up the context you sent.
+  -  
 ### DockerFile Instructions: 
   
-   - **.dockerignore** : 
+   - **.dockerignore**
+            
+        a. Before the docker CLI sends the context to the docker daemon, it looks for a file named .dockerignore in the root directory of the context.
+        b. If this file exists, the CLI modifies the context to exclude files and directories that match patterns in it.
+        c.  This helps to avoid unnecessarily sending large or sensitive files and directories to the daemon and potentially adding them to images using ADD or COPY.
+        d. exmaple: create a .dockerignore file and place the below contents.
+                # comment
+                */temp*
+                */*/temp*
+                temp?
+       docker-cli will skip all the files specifed at above pattern while serving files to docker deamon.              
    
    - **FROM** : defines the base image to start the build process.
+                syntax: 
+                      
+                        FROM <image> [AS <name>]
+                        or
+                        FROM <image>[:<tag>] [AS <name>]
+                        or
+                        FROM <image>[@<digest>] [AS <name>]
+                                                  
    
    - **MAINTAINER** : declares the author who has generated this image.
    
@@ -25,14 +69,33 @@
                we specify those commands by with RUN.
                This RUN command is used to build/customized the images. that's why it runs during the contianer build process.
                e.g.: RUN apt-get update && apt-get install java8
-               
+               so basically RUN has two forms: 
+                                    
+                    RUN <command> 
+                    (shell form, the command is run in a shell, which by default is /bin/sh -c on Linux or cmd /S /C on Windows)
+                    
+                    RUN ["executable", "param1", "param2"] (exec form) like RUN date || RUN echo "hello from docker"
+         
+       we use backslash(\) in shell to run a single line instruction on to next line. same can be used with RUN command too.
+                e.g.: 
+                  
+                        RUN set -eux; \
+                                 { \
+                                      echo 'Package: php*'; \
+                                      echo 'Pin: release *'; \
+                                      echo 'Pin-Priority: -1'; \
+                                  } > /etc/apt/preferences.d/no-debian-php
+
    - **CMD** : provides default for executing container.
                This is also a kind of command only but it is an executable command.
                the specified command here executes after container is completely built and during container initialization.
                like if you want to specify to print something or any just executable command.
                e.g.: CMD echo "hello from container";
-                     CMD date;
-                    
+                     CMD date;                                
+    CMD ["executable","param1","param2"] (exec form, this is the preferred form)
+    CMD ["param1","param2"] (as default parameters to ENTRYPOINT)
+    CMD command param1 param2 (shell form)
+
    - **ENTRYPOINT** : configures a container that will run as an executables.
                       basically this the first command which get executed after container is built completely.
                       this overrides the CMD command.
@@ -56,7 +119,7 @@
    
    - **WORKDIR** : sets the working directory.
    
-   - **#** : used to specify a comment.
+   - **_#_** : used to specify a comment.
    
    
    
