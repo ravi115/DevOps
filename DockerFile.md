@@ -63,6 +63,9 @@
    - **MAINTAINER** : declares the author who has generated this image.
    
    - **ENV** : sets environment variable.
+              
+                      ENV <key> <value>
+                      ENV <key>=<value> ...
    
    - **RUN** : executes any commands in a new layer on top of the current image and commits the result.
                commands like, shell command or if we want to install something then we use the command to execute something then
@@ -92,35 +95,110 @@
                like if you want to specify to print something or any just executable command.
                e.g.: CMD echo "hello from container";
                      CMD date;                                
-    CMD ["executable","param1","param2"] (exec form, this is the preferred form)
-    CMD ["param1","param2"] (as default parameters to ENTRYPOINT)
-    CMD command param1 param2 (shell form)
+    
+              CMD ["executable","param1","param2"] (exec form, this is the preferred form)
+              CMD ["param1","param2"] (as default parameters to ENTRYPOINT)
+              CMD command param1 param2 (shell form)
+
+   - **LABEL** :
+                The LABEL instruction adds metadata to an image. A LABEL is a key-value pair. To include spaces within a LABEL value, use quotes and backslashes as you would in command-line parsing. 
+                A few usage examples:
+  
+                      LABEL "com.example.vendor"="ACME Incorporated"
+                      LABEL com.example.label-with-value="foo"
+                      LABEL version="1.0"
+                      LABEL description="This text illustrates \
+                      that label-values can span multiple lines."
+  
+        Define the multiple LABEL in single line: 
+        
+          LABEL multi.label1="value1" multi.label2="value2" other="value3"
+          or
+          LABEL multi.label1="value1" \
+                    multi.label2="value2" \
+                    other="value3"
+   we can label as below :
+   
+                  "Labels": {
+                                  "com.example.vendor": "ACME Incorporated"
+                                  "com.example.label-with-value": "foo",
+                                  "version": "1.0",
+                                  "description": "This text illustrates that label-values can span multiple lines.",
+                                  "multi.label1": "value1",
+                                  "multi.label2": "value2",
+                                  "other": "value3"
+                              },
 
    - **ENTRYPOINT** : configures a container that will run as an executables.
                       basically this the first command which get executed after container is built completely.
                       this overrides the CMD command.
                       like if we want to execute any file or want to run any process as soon as the container is ready then
                       we can specify those commands here.
+                      
+                      ENTRYPOINT has two forms: 
+                      
+                      
+                             ENTRYPOINT ["executable", "param1", "param2"] (exec form, preferred)
+                             ENTRYPOINT command param1 param2 (shell form)
+
    
    - **ADD** : copies new files or directory or remote file to container.
                prefered to use _CPOY_ instead of _ADD_.
                ADD [source_file_directory] [destination file directroy]
                ADD /my_files_on_host_machine/my_folder_on_container's_own_directory.
+               ADD has two forms: 
                
-   - **COPY** : copies new files or directories to container.
                   
+                    ADD [--chown=<user>:<group>] <src>... <dest>
+                    ADD [--chown=<user>:<group>] ["<src>",... "<dest>"] (this form is required for paths containing whitespace)
+
+   - **COPY** : copies new files or directories to container.
+                COPY has two forms: 
+                  
+                  
+                   COPY [--chown=<user>:<group>] <src>... <dest>
+                   COPY [--chown=<user>:<group>] ["<src>",... "<dest>"] (this form is required for paths containing whitespace)
+
    - **EXPOSE** : used to associate a specific port to enable networking between the running process inside container and host.
                   in simple word, the port on which container will listen for any networking activity.
+                  You can specify whether the port listens on TCP or UDP, and the default is TCP if the protocol is not specified.
+
+
                   
+                  Syntax: 
+                  
+                  EXPOSE <port> [<port>/<protocol>...]
+                 
+                  e.g.: 
+                  EXPOSE 80/tcp
+                  EXPOSE 80/udp
    
    - **VOLUME** : used to mount the volume specified on host machone or can be used the existing volume avaibale on host machine.
    
+                  VOLUME ["/data"]
+        
    - **USER** : sets the username for the following RUN/CMD/ENTRYPOINT commands.
-   
+                Syntax: 
+                The USER has two forms: 
+                
+                 USER <user>[:<group>] or
+                 USER <UID>[:<GID>]
+       the USER instruction sets the user name (or UID) and optionally the user group (or GID) to use when running the image and for any RUN, CMD and ENTRYPOINT instructions that follow it in the Dockerfile.
+       
    - **WORKDIR** : sets the working directory.
    
    - **_#_** : used to specify a comment.
    
-   
+ 
+ Samples: 
+ 
+ # Nginx
+#
+# VERSION               0.0.1
+
+FROM      ubuntu
+LABEL Description="This image is used to start the foobar executable" Vendor="ACME Products" Version="1.0"
+RUN apt-get update && apt-get install -y inotify-tools nginx apache2 openssh-server
+
    
    
