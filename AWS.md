@@ -26,7 +26,22 @@ This Document explains AWS concept with practical examples.
       - Each user in the group inherits the permissions of the group.
     - 3. **Policies**
       - Policies are made up of documents called policy document.
-      - The policies documents the permission for each users/groups/roles that what they are suppoose to do.
+      - The policies documents contains the permission for each users/groups/roles that what they are suppoose to do.
+      - Example of policy json document: 
+      
+          
+                {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Effect": "Allow",
+                      "Action": "*",
+                      "Resource": "*"
+                    }
+                  ]
+                }
+                
+                
     - 4. **Roles**
       - we create roles and then assign them to AWS resources.
   
