@@ -6,6 +6,7 @@ This Document explains AWS concept with practical examples.
 **Course-Contents**
 
 [1. IAM](#1-iam)
+
 [2. S3](#2-s3)
 
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -66,3 +67,15 @@ This Document explains AWS concept with practical examples.
       
 -------------------------------------------------------------------------------------------------------------------------------
 # 2. S3 ##
+
+  - S3 : Simple Storage Service.
+  - _Bucket_ : 
+    - 1. It's just like a folder on the cloud. 
+    - 2. Each bucket has its own url to be accessed outside the cloud.
+    - 3. S3 is a universal namespace. This names must be unique globaly.
+    - 4. S3 bucket url formate: 
+    
+            https://s3-<region_name>.amazonaws.com/<bucket_name>
+            
+            For Example:
+    - 5. We get HTTP 200 for any successful upload of file in bucket.        
