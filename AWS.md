@@ -6,6 +6,7 @@ This Document explains AWS concept with practical examples.
 **Course-Contents**
 
 [1. IAM](#1-iam)
+[2. S3](#2-s3)
 
 ----------------------------------------------------------------------------------------------------------------------------------
 ## 1. IAM ##
@@ -46,7 +47,9 @@ This Document explains AWS concept with practical examples.
       - we create roles and then assign them to AWS resources.
   
   - Whaterver changes we are performing on IAM, it is going to be applied on across the region. This is can  also be observed on region area on AWS page while accessing the IAM page.
+  
   - Configure **security status** section: 
+  
     - 1. Root Account:
       - Root account is the main account which is signed with the registred email-id and the root account has full access to AWS.
     - 2. Activate MFA (MultiFactor Access) on your account:
@@ -61,3 +64,5 @@ This Document explains AWS concept with practical examples.
       - In the Group we can assgin the set of AWS access (jobtype, like database administrator, AWSFullAccess, e.t.c) to the set of users.
       
       
+-------------------------------------------------------------------------------------------------------------------------------
+# 2. S3 ##
